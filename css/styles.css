@@ -1,0 +1,146 @@
+/* styles.css */
+
+/* Add margin to the body to create space around the edges */
+body {
+    margin: 20px; /* Adjust the value as needed */
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f9f9f9;
+}
+
+/* Alternatively, you can use padding instead of margin */
+body {
+    padding: 20px; /* Adjust the value as needed */
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f9f9f9;
+}
+
+.center {
+    text-align: center; /* Center text or inline elements */
+}
+
+.container {
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: center;     /* Center content vertically */
+    min-height: 100vh;       /* Optional: Full viewport height */
+    background-color: #f9f9f9; /* Background color */
+}
+
+th {
+    padding: 10px;
+    text-align: left;
+    text-align: center;
+    /* Border and other styles */
+}
+
+.th-id {
+    width: 10%; /* 2 out of 22 parts */
+    text-align: center;
+}
+
+.th-first-name {
+    width: 36.36%; /* 8 out of 22 parts */
+    text-align: center;
+}
+
+.th-last-name {
+    width: 36.36%; /* 8 out of 22 parts */
+    text-align: center;
+}
+
+.th-actions {
+    width: 18.18%; /* 4 out of 22 parts */
+    text-align: center;
+}
+
+th, td {
+    border: 1px solid #ddd;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* General button styling */
+.button {
+    display: inline-block;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: white;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+/* Specific button styles */
+.edit-button {
+    background-color: #4CAF50; /* Green */
+    margin-right: 10px; /* Space between buttons */
+}
+
+.delete-button {
+    background-color: #f44336; /* Red */
+    color: white; /* White text color */
+    padding: 5px 10px; /* Some padding for better appearance */
+    text-decoration: none; /* Remove underline */
+    border-radius: 3px; /* Rounded corners */
+    font-weight: bold; /* Make text bold */
+}
+
+.delete-button:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+}
+
+
+/* Align buttons within the table cell */
+.actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.actions a {
+    margin: 0;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+
+/* Style the input field to make it bigger */
+input[type="text"] {
+    font-size: 18px; /* Increase font size */
+    padding: 10px;   /* Increase padding for more space inside */
+    width: 300px;    /* Set a larger width */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Style the button to make it bigger */
+button[type="submit"] {
+    font-size: 18px; /* Increase font size */
+    padding: 10px 20px; /* Increase padding for more space inside */
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #4cae4c;
+}
