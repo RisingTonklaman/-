@@ -2,12 +2,31 @@
 include 'includes/db.php';
 include 'includes/functions.php';
 
+// Handle deletion
+if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
+    $id = $_GET['id'];
+    deleteMember($pdo, $id);
+    header("Location: members.php"); // Redirect to avoid resubmission
+    exit();
+}
+
 // Handle inline edit form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['random_id']) && isset($_POST['first_name']) && isset($_POST['last_name'])) {
     updateMember($pdo, $_POST['random_id'], $_POST['first_name'], $_POST['last_name']);
 }
 
+// Handle member addition
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['first_name']) && isset($_POST['last_name'])) {
+    insertMember($pdo, $_POST['first_name'], $_POST['last_name']);
+}
+
+// Fetch all members
 $members = getAllMembers($pdo);
+
+function deleteMember($pdo, $id) {
+    $stmt = $pdo->prepare("DELETE FROM member WHERE random_id = ?");
+    $stmt->execute([$id]);
+}
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +38,6 @@ $members = getAllMembers($pdo);
     <link rel="stylesheet" href="css/styles.css">
     <script>
         function enableEdit(row) {
-            // Show input fields and hide static text
             var cells = row.getElementsByTagName('td');
             for (var i = 1; i < cells.length - 1; i++) {
                 var cell = cells[i];
@@ -27,7 +45,6 @@ $members = getAllMembers($pdo);
                 cell.innerHTML = '<input type="text" value="' + text + '" />';
             }
 
-            // Change Edit button to Save button
             var actionsCell = cells[cells.length - 1];
             actionsCell.innerHTML = '<button onclick="saveChanges(this)">Save</button> <button onclick="cancelEdit(this)">Cancel</button>';
         }
@@ -50,7 +67,6 @@ $members = getAllMembers($pdo);
                 body: formData
             }).then(response => response.text())
               .then(data => {
-                  // Reload page to reflect changes
                   window.location.reload();
               });
         }
@@ -67,6 +83,20 @@ $members = getAllMembers($pdo);
             actionsCell.innerHTML = '<a href="#" onclick="enableEdit(this.closest(\'tr\'))" class="button edit-button">Edit</a>';
         }
     </script>
+    <style>
+        .delete-button {
+            background-color: #f44336; /* Red */
+            color: white;
+            padding: 5px 10px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .delete-button:hover {
+            background-color: #d32f2f; /* Darker red */
+        }
+    </style>
 </head>
 <body class="center">
     <h1>Manage Members</h1>
@@ -94,7 +124,9 @@ $members = getAllMembers($pdo);
                     <td><?php echo htmlspecialchars($member['last_name']); ?></td>
                     <td class="actions">
                         <a href="#" onclick="enableEdit(this.closest('tr'))" class="button edit-button">Edit</a>
-                        <a href="delete_member.php?id=<?php echo htmlspecialchars($member['random_id']); ?>" onclick="return confirm('Are you sure you want to delete this member?');" class="button delete-button">Delete</a>
+                        <a href="members.php?action=delete&id=<?php echo htmlspecialchars($member['random_id']); ?>" 
+                           class="delete-button"
+                           onclick="return confirm('Are you sure you want to delete this member?');">Delete</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

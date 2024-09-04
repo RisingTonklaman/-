@@ -17,13 +17,19 @@ function getAllBookings($pdo) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+// Function to insert a new member
 function insertMember($pdo, $first_name, $last_name) {
-    // Generate a random_id for the member
-    $random_id = bin2hex(random_bytes(8)); // Generate a random 16-character hex string
-
-    $stmt = $pdo->prepare("INSERT INTO member (random_id, first_name, last_name) VALUES (?, ?, ?)");
-    return $stmt->execute([$random_id, $first_name, $last_name]);
+    try {
+        $random_id = uniqid();
+        $stmt = $pdo->prepare("INSERT INTO member (random_id, first_name, last_name) VALUES (?, ?, ?)");
+        $stmt->execute([$random_id, $first_name, $last_name]);
+    } catch (PDOException $e) {
+        echo "Error inserting member: " . $e->getMessage();
+    }
 }
+
+
+
 
 function insertClass($pdo, $name) {
     // Generate a random_id for the class

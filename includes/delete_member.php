@@ -1,16 +1,15 @@
 <?php
-require 'functions.php';
+include 'includes/db.php';
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-
-    $pdo = connectDB();
-    $stmt = $pdo->prepare("DELETE FROM member WHERE id = ?");
-    $stmt->execute([$id]);
-
-    header("Location: members.php");
-    exit;
-} else {
-    echo "Invalid member ID!";
+    try {
+        $stmt = $pdo->prepare("DELETE FROM member WHERE random_id = ?");
+        $stmt->execute([$id]);
+        header("Location: members.php");
+        exit;
+    } catch (PDOException $e) {
+        echo "Error deleting member: " . $e->getMessage();
+    }
 }
 ?>
